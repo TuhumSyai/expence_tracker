@@ -2,8 +2,11 @@ package server;
 
 import database.DatabaseHandler;
 import models.DataPackage;
+import models.Expense;
+
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 // Пункт 6: Потоки (реализация Runnable)
 public class ClientHandler implements Runnable {
@@ -53,9 +56,36 @@ public class ClientHandler implements Runnable {
                         response.setOperation("INVALID_AUTH");
                     }
                     break;
-                case "ADD_EXPENSE":
-                    dbHandler.addExpense(request.getExpense());
+                case "GET_ALL_EXPENSES":
+                    // Вызываем твой новый метод из DatabaseHandler
+                    response.setExpenses(dbHandler.getExpenses(request.getUser().getId()));
                     response.setOperation("SUCCESS");
+                    break;
+                case "ADD_EXPENSE":
+                    try {
+                        dbHandler.addExpense(request.getExpense());
+                        response.setOperation("SUCCESS");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        response.setOperation("ERROR");
+                    }
+                    break;
+                case "GET_EXPENSES":
+                    int id = request.getUser().getId();
+                    // Вызываем метод БД, который тянет траты по ID пользователя
+                    ArrayList<Expense> userExpenses = dbHandler.getExpenses(id);
+                    response.setExpenses(userExpenses);
+                    response.setOperation("SUCCESS");
+                    break;
+                case "DELETE_EXPENSE":
+                    try {
+                        // Берем ID из присланного объекта Expense
+                        dbHandler.deleteExpense(request.getExpense().getId());
+                        response.setOperation("SUCCESS");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        response.setOperation("ERROR");
+                    }
                     break;
                 default:
                     response.setOperation("UNKNOWN_COMMAND");

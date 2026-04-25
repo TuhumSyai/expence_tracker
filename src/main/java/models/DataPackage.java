@@ -2,6 +2,7 @@ package models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataPackage implements Serializable {
     private String operation; // "LOGIN", "REGISTER", "ADD_EXPENSE", "GET_ALL_EXPENSES"

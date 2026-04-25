@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.AddExpenseController">
+    <children>
+        <VBox alignment="CENTER" spacing="15.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Label text="Новый расход">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+
+                <ComboBox fx:id="categoryBox" prefWidth="360.0" promptText="Выберите категорию" />
+
+                <TextField fx:id="amountField" prefWidth="360.0" promptText="Сумма (например, 500.50)" />
+
+                <TextField fx:id="descriptionField" prefWidth="360.0" promptText="Описание (необязательно)" />
+
+                <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#handleAdd" prefHeight="35.0" prefWidth="150.0" text="Добавить" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" />
+                <Label fx:id="errorLabel" text="Заполните категорию и сумму!" textFill="red" visible="false">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

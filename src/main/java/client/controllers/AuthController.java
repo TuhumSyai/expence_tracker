@@ -2,12 +2,18 @@ package client.controllers;
 
 import client.ClientSocket;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
+import javafx.stage.Stage;
 import models.DataPackage;
 import models.User;
+
+import java.io.IOException;
 
 public class AuthController {
 
@@ -51,8 +57,26 @@ public class AuthController {
         DataPackage response = ClientSocket.sendRequest(request);
 
         if (response != null && "SUCCESS".equals(response.getOperation())) {
-            System.out.println("Вход выполнен! Добро пожаловать, " + response.getUser().getFullName());
-            // TODO: Переход к главному окну
+            ClientSocket.currentUser = response.getUser();
+            System.out.println("Вход выполнен! ID пользователя: " + ClientSocket.currentUser.getId());
+
+            try {
+                // Загружаем новый FXML
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
+                Parent root = loader.load();
+
+                // Получаем текущее окно (Stage) через любой элемент на текущей сцене
+                Stage stage = (Stage) loginField.getScene().getWindow();
+
+                // Устанавливаем новую сцену
+                stage.setScene(new Scene(root));
+                stage.setTitle("Expense Tracker - Главное меню");
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Ошибка при загрузке главного окна!");
+            }
         } else {
             loginErrorLabel.setText("Неверный логин или пароль");
             showError(loginErrorLabel, true);

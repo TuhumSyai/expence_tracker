@@ -1,6 +1,8 @@
 package client;
 
 import models.DataPackage;
+import models.User;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -8,6 +10,8 @@ public class ClientSocket {
     private static Socket socket;
     private static ObjectOutputStream out;
     private static ObjectInputStream in;
+
+    public static User currentUser;
 
     public static void connect() {
         try {

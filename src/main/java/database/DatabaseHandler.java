@@ -59,7 +59,7 @@ public class DatabaseHandler extends Configs { // Пункт: Наследова
         prSt.setDate(5, Date.valueOf(expense.getDate())); // Конвертируем LocalDate в SQL Date
         prSt.executeUpdate();
     }
-    public ArrayList<Expense> getUserExpenses(int userId) throws SQLException, ClassNotFoundException {
+    public ArrayList<Expense> getExpenses(int userId) throws SQLException, ClassNotFoundException {
         ArrayList<Expense> expenses = new ArrayList<>();
         String query = "SELECT * FROM " + Const.EXPENSE_TABLE + " WHERE " + Const.EXPENSES_USER + "=?";
 
@@ -69,6 +69,7 @@ public class DatabaseHandler extends Configs { // Пункт: Наследова
         ResultSet resSet = prSt.executeQuery();
         while (resSet.next()) {
             Expense expense = new Expense(
+                    resSet.getInt(Const.EXPENSES_ID),
                     resSet.getInt(Const.EXPENSES_USER),
                     resSet.getDouble(Const.EXPENSES_AMOUNT),
                     resSet.getString(Const.EXPENSES_CAT),
@@ -79,4 +80,15 @@ public class DatabaseHandler extends Configs { // Пункт: Наследова
         }
         return expenses;
     }
+
+    public void deleteExpense(int expenseId) throws SQLException, ClassNotFoundException {
+        // Удаляем по первичному ключу ID записи
+        String delete = "DELETE FROM " + Const.EXPENSE_TABLE + " WHERE id = ?";
+
+        PreparedStatement prSt = getDbConnection().prepareStatement(delete);
+        prSt.setInt(1, expenseId);
+        prSt.executeUpdate();
+    }
+
+
 }

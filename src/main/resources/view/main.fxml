@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.MainController">
+    <children>
+        <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="14.0" prefHeight="50.0" prefWidth="760.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+            <children>
+                <Label text="Мои расходы">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Label>
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button onAction="#handleExport" prefHeight="35.0" style="-fx-background-color: #217346; -fx-text-fill: white;" text="Экспорт (Excel)" />
+                <Button onAction="#handleImport" prefHeight="35.0" style="-fx-background-color: #1f4e3d; -fx-text-fill: white;" text="Импорт" />
+                <Button fx:id="btnAddExpense" onAction="#openAddWindow" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;" text="+ Добавить" />
+                <Button onAction="#deleteExpense" prefHeight="35.0" style="-fx-background-color: #f44336; -fx-text-fill: white;" text="Удалить" />
+                <Button fx:id="btnLogout" onAction="#handleLogout" prefHeight="35.0" style="-fx-background-color: #757575; -fx-text-fill: white;" text="Выход" />
+            </children>
+        </HBox>
+        <TabPane layoutX="20.0" layoutY="70.0" prefHeight="510.0" prefWidth="760.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
+            <tabs>
+                <Tab text="Аналитика">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <PieChart fx:id="expensePieChart" layoutX="130.0" layoutY="41.0" prefHeight="400.0" prefWidth="500.0" title="Расходы по категориям" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="История трат">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="expenseTable" layoutX="14.0" layoutY="14.0" prefHeight="450.0" prefWidth="730.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                    <columns>
+                                        <TableColumn fx:id="colCategory" prefWidth="150.0" text="Категория" />
+                                        <TableColumn fx:id="colDescription" prefWidth="300.0" text="Описание" />
+                                        <TableColumn fx:id="colAmount" prefWidth="120.0" text="Сумма" />
+                                        <TableColumn fx:id="colDate" prefWidth="150.0" text="Дата" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>
